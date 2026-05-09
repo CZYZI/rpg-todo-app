@@ -5,19 +5,27 @@ import { useQwenAPI } from '../hooks/useQwenAPI';
 import { WorldviewSelector } from '../components/rpg/WorldviewSelector';
 import { TaskImport } from '../components/task/TaskImport';
 import { TaskDifficulty, Worldview } from '../types';
+import { getTimeOfDay, TIME_OF_DAY_LABELS, TimeOfDay } from '../utils/timeOfDay';
+import { DIFFICULTY_MULTIPLIER } from '../types';
 
 export function ImportPage() {
   const navigate = useNavigate();
   const addTasks = useTaskStore((s) => s.addTasks);
+  const getRecentDescriptions = useTaskStore((s) => s.getRecentDescriptions);
   const { generateTaskDescription, loading, error } = useQwenAPI();
 
   const [worldview, setWorldview] = useState<Worldview>('medieval');
   const [defaultDuration, setDefaultDuration] = useState(30);
   const [defaultDifficulty, setDefaultDifficulty] = useState<TaskDifficulty>('normal');
 
+  const currentTimeOfDay = getTimeOfDay();
+
   const handleImport = async (text: string) => {
     const lines = text.split('\n').filter((line) => line.trim().length > 0);
     if (lines.length === 0) return;
+
+    // 获取历史描述用于防重复
+    const historyDescriptions = getRecentDescriptions(20);
 
     const partialTasks = lines.map((line) => ({
       originalName: line.trim(),
@@ -31,17 +39,21 @@ export function ImportPage() {
     const tasksWithDescription = await Promise.all(
       partialTasks.map(async (task) => {
         try {
-          const description = await generateTaskDescription(
-            task.originalName,
+          const description = await generateTaskDescription({
+            taskName: task.originalName,
             worldview,
-            []
-          );
+            historyDescriptions,
+            difficulty: task.difficulty,
+            timeOfDay: currentTimeOfDay,
+            score: Math.round(task.duration * (DIFFICULTY_MULTIPLIER[task.difficulty] || 1.0)),
+          });
           return { ...task, rpgDescription: description };
         } catch {
           // AI 失败时使用降级方案
+          const score = Math.round(task.duration * (DIFFICULTY_MULTIPLIER[task.difficulty] || 1.0));
           return {
             ...task,
-            rpgDescription: `${task.originalName}，奖励${task.duration * 1.5}积分`,
+            rpgDescription: `${task.originalName}，奖励${score}积分`,
           };
         }
       })
@@ -80,6 +92,10 @@ export function ImportPage() {
           <option value="hard">困难 (×2.0)</option>
           <option value="epic">史诗 (×3.0)</option>
         </select>
+      </div>
+
+      <div className="mb-4 text-sm text-gray-500">
+        当前时段：{TIME_OF_DAY_LABELS[currentTimeOfDay]} — AI 将根据时段调整任务氛围
       </div>
 
       <TaskImport onImport={handleImport} loading={loading} />
