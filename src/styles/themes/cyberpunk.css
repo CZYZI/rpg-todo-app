@@ -1,0 +1,39 @@
+/* 赛博朋克主题 */
+[data-theme="cyberpunk"] {
+  --color-bg: #0a0a1a;
+  --color-bg-secondary: #1a1a2e;
+  --color-text: #00ff41;
+  --color-primary: #ff00ff;
+  --color-primary-hover: #cc00cc;
+  --font-body: 'Courier New', monospace;
+  --theme-glow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+}
+
+[data-theme="cyberpunk"] body {
+  background-image: 
+    linear-gradient(transparent 95%, rgba(0, 255, 65, 0.1) 100%);
+  animation: scanline 8s linear infinite;
+}
+
+@keyframes scanline {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100vh; }
+}
+
+[data-theme="cyberpunk"] .task-card {
+  border: 1px solid #00ff41;
+  box-shadow: var(--theme-glow);
+  background: rgba(26, 26, 46, 0.9);
+}
+
+[data-theme="cyberpunk"] button.primary {
+  background: transparent;
+  border: 2px solid #ff00ff;
+  color: #ff00ff;
+  text-shadow: var(--theme-glow);
+}
+
+[data-theme="cyberpunk"] button.primary:hover {
+  background: rgba(255, 0, 255, 0.2);
+  box-shadow: var(--theme-glow);
+}

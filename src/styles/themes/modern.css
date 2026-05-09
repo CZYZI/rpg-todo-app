@@ -1,0 +1,31 @@
+/* 现代冒险主题 */
+[data-theme="modern"] {
+  --color-bg: #ffffff;
+  --color-bg-secondary: #f0f9ff;
+  --color-text: #1e293b;
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+[data-theme="modern"] body {
+  background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%);
+}
+
+[data-theme="modern"] .task-card {
+  border: 1px solid #e5e7eb;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="modern"] .task-card:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  transition: all 0.2s ease;
+}
+
+[data-theme="modern"] button.primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border: none;
+  color: white;
+}

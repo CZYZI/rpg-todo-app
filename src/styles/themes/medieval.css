@@ -1,0 +1,26 @@
+/* 中世纪奇幻主题 */
+[data-theme="medieval"] {
+  --color-bg: #fdf6e3;
+  --color-bg-secondary: #f0e6d3;
+  --color-text: #2c1810;
+  --color-primary: #8b4513;
+  --color-primary-hover: #6b3410;
+  --font-body: 'Georgia', serif;
+}
+
+[data-theme="medieval"] body {
+  background-image: var(--theme-bg-image);
+  background-size: cover;
+  background-attachment: fixed;
+  background-opacity: 0.1;
+}
+
+[data-theme="medieval"] .task-card {
+  border: 2px solid #8b4513;
+  background: linear-gradient(135deg, #fdf6e3 0%, #f0e6d3 100%);
+}
+
+[data-theme="medieval"] button.primary {
+  background: linear-gradient(135deg, #8b4513 0%, #6b3410 100%);
+  border: 1px solid #2c1810;
+}
