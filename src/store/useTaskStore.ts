@@ -11,6 +11,7 @@ interface TaskStore {
   completeTask: (id: string) => number; // 返回实际获得的积分
   removeTask: (id: string) => void;
   updateTask: (id: string, updates: Partial<Task>) => void;
+  getRecentDescriptions: (limit?: number) => string[]; // 获取最近生成的RPG描述，用于防重复
 }
 
 export const useTaskStore = create<TaskStore>()(
@@ -60,6 +61,13 @@ export const useTaskStore = create<TaskStore>()(
       updateTask: (id, updates) => set((state) => ({
         tasks: state.tasks.map((t) => (t.id === id ? { ...t, ...updates } : t)),
       })),
+      getRecentDescriptions: (limit = 20) => {
+        const state = get();
+        return state.tasks
+          .filter((t) => t.rpgDescription && t.rpgDescription.length > 0)
+          .slice(-limit)
+          .map((t) => t.rpgDescription);
+      },
     }),
     {
       name: STORAGE_KEYS.TASKS,
