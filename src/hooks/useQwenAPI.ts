@@ -2,12 +2,21 @@ import { useState, useCallback } from 'react';
 import { callQwenAPI, QwenMessage } from '../services/qwenService';
 import { getStorage } from '../utils/storage';
 import { STORAGE_KEYS } from '../constants';
+import { TaskDifficulty } from '../types';
+import { TimeOfDay } from '../utils/timeOfDay';
 
 interface UseQwenAPIReturn {
   loading: boolean;
   error: string | null;
   generateText: (messages: QwenMessage[]) => Promise<string>;
-  generateTaskDescription: (taskName: string, worldview: string, historyDescriptions: string[]) => Promise<string>;
+  generateTaskDescription: (params: {
+    taskName: string;
+    worldview: string;
+    historyDescriptions: string[];
+    difficulty?: TaskDifficulty;
+    timeOfDay?: TimeOfDay;
+    score?: number;
+  }) => Promise<string>;
 }
 
 export function useQwenAPI(): UseQwenAPIReturn {
@@ -34,7 +43,23 @@ export function useQwenAPI(): UseQwenAPIReturn {
   }, []);
 
   const generateTaskDescription = useCallback(
-    async (taskName: string, worldview: string, historyDescriptions: string[]): Promise<string> => {
+    async (params: {
+      taskName: string;
+      worldview: string;
+      historyDescriptions: string[];
+      difficulty?: TaskDifficulty;
+      timeOfDay?: TimeOfDay;
+      score?: number;
+    }): Promise<string> => {
+      const {
+        taskName,
+        worldview,
+        historyDescriptions,
+        difficulty = 'normal',
+        timeOfDay = 'afternoon',
+        score = 30,
+      } = params;
+
       setLoading(true);
       setError(null);
       try {
@@ -44,7 +69,15 @@ export function useQwenAPI(): UseQwenAPIReturn {
         }
         // 动态导入以避免循环依赖
         const { generateRpgDescription } = await import('../services/qwenService');
-        const result = await generateRpgDescription(apiKey, taskName, worldview, historyDescriptions);
+        const result = await generateRpgDescription(
+          apiKey,
+          taskName,
+          worldview,
+          historyDescriptions,
+          difficulty,
+          timeOfDay,
+          score
+        );
         return result;
       } catch (err) {
         const message = err instanceof Error ? err.message : '生成失败';
