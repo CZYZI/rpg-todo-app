@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#92400e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#78350f;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" fill="url(#bg)" rx="10"/>
+  <!-- Parchment background -->
+  <rect x="30" y="40" width="140" height="120" rx="5" fill="#fef3c7" stroke="#92400e" stroke-width="2"/>
+  <!-- Text lines -->
+  <line x1="50" y1="70" x2="150" y2="70" stroke="#92400e" stroke-width="2"/>
+  <line x1="50" y1="85" x2="130" y2="85" stroke="#92400e" stroke-width="2"/>
+  <line x1="50" y1="100" x2="140" y2="100" stroke="#92400e" stroke-width="2"/>
+  <line x1="50" y1="115" x2="120" y2="115" stroke="#92400e" stroke-width="2"/>
+  <!-- Sword -->
+  <line x1="40" y1="50" x2="55" y2="150" stroke="#6b7280" stroke-width="3"/>
+  <path d="M 55 50 L 55 40 L 60 45 L 55 50 L 50 45 Z" fill="#d1d5db"/>
+  <!-- Shield -->
+  <path d="M 160 60 Q 170 80 160 100 Q 150 80 160 60" fill="#3b82f6" stroke="#1e40af" stroke-width="2"/>
+  <!-- Text -->
+  <text x="100" y="190" text-anchor="middle" fill="#fbbf24" font-size="14" font-weight="bold">黑夜骑士</text>
+</svg>

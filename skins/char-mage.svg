@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#312e81;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5b21b6;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="magic">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#a855f7;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="200" height="200" fill="url(#bg)" rx="10"/>
+  <!-- Magic aura -->
+  <circle cx="100" cy="100" r="60" fill="url(#magic)"/>
+  <!-- Hat -->
+  <path d="M 60 90 L 100 40 L 140 90 Z" fill="#7c3aed"/>
+  <rect x="75" y="90" width="50" height="5" fill="#7c3aed"/>
+  <!-- Face -->
+  <circle cx="100" cy="105" r="20" fill="#fcd34d"/>
+  <!-- Eyes -->
+  <circle cx="93" cy="102" r="3" fill="#312e81"/>
+  <circle cx="107" cy="102" r="3" fill="#312e81"/>
+  <!-- Beard -->
+  <path d="M 90 108 Q 100 120 110 108" stroke="#8b5cf6" stroke-width="3" fill="none"/>
+  <!-- Robe -->
+  <path d="M 65 125 L 135 125 L 125 180 L 75 180 Z" fill="#6d28d9"/>
+  <!-- Staff -->
+  <line x1="145" y1="110" x2="145" y2="175" stroke="#92400e" stroke-width="4"/>
+  <circle cx="145" cy="105" r="10" fill="#a855f7" opacity="0.8"/>
+  <!-- Text -->
+  <text x="100" y="195" text-anchor="middle" fill="#c4b5fd" font-size="14" font-weight="bold">法师</text>
+</svg>

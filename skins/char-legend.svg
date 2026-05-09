@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:0.6"/>
+      <stop offset="100%" style="stop-color:#fbbf24;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="200" height="200" fill="url(#bg)" rx="10"/>
+  <!-- Glow effect -->
+  <circle cx="100" cy="100" r="70" fill="url(#glow)"/>
+  <!-- Crown -->
+  <path d="M 75 75 L 85 60 L 100 70 L 115 60 L 125 75" fill="#fbbf24" stroke="#f59e0b" stroke-width="2"/>
+  <!-- Face -->
+  <circle cx="100" cy="95" r="22" fill="#fcd34d"/>
+  <!-- Eyes - determined -->
+  <circle cx="92" cy="92" r="3" fill="#78350f"/>
+  <circle cx="108" cy="92" r="3" fill="#78350f"/>
+  <!-- Eyebrows -->
+  <path d="M 87 87 L 95 89" stroke="#78350f" stroke-width="2" stroke-linecap="round"/>
+  <path d="M 113 89 L 105 87" stroke="#78350f" stroke-width="2" stroke-linecap="round"/>
+  <!-- Smile -->
+  <path d="M 93 100 Q 100 106 107 100" stroke="#78350f" stroke-width="2" fill="none"/>
+  <!-- Golden armor -->
+  <path d="M 68 117 L 132 117 L 127 175 L 73 175 Z" fill="#fbbf24"/>
+  <!-- Armor details -->
+  <circle cx="100" cy="140" r="12" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+  <path d="M 100 128 L 100 152" stroke="#d97706" stroke-width="2"/>
+  <path d="M 88 140 L 112 140" stroke="#d97706" stroke-width="2"/>
+  <!-- Cape -->
+  <path d="M 68 117 Q 40 140 55 175 L 73 175 Z" fill="#dc2626" opacity="0.8"/>
+  <path d="M 132 117 Q 160 140 145 175 L 127 175 Z" fill="#dc2626" opacity="0.8"/>
+  <!-- Text -->
+  <text x="100" y="195" text-anchor="middle" fill="#78350f" font-size="14" font-weight="bold">传说</text>
+</svg>
