@@ -1,4 +1,6 @@
-import { buildTaskPrompt, FALLBACK_DESCRIPTIONS } from '../constants/prompts';
+import { buildTaskPrompt, getSmartFallbackDescription, QWEN_SYSTEM_PROMPT } from '../constants/prompts';
+import { TaskDifficulty } from '../types';
+import { TimeOfDay } from '../utils/timeOfDay';
 
 const QWEN_API_URL = 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation';
 
@@ -49,8 +51,8 @@ export async function callQwenAPI(
     model: 'qwen-max',
     input: { messages },
     parameters: {
-      temperature: 0.8,
-      max_tokens: 100,
+      temperature: 0.9,
+      max_tokens: 150,
       ...params,
     },
   };
@@ -81,18 +83,28 @@ export async function callQwenAPI(
 }
 
 /**
- * 生成 RPG 任务描述
+ * 生成 RPG 任务描述（改进版）
+ * 新增：difficulty, timeOfDay 参数
  */
 export async function generateRpgDescription(
   apiKey: string,
   taskName: string,
   worldview: string,
-  historyDescriptions: string[]
+  historyDescriptions: string[],
+  difficulty: TaskDifficulty = 'normal',
+  timeOfDay: TimeOfDay = 'afternoon',
+  score: number = 30
 ): Promise<string> {
-  const prompt = buildTaskPrompt(taskName, worldview, historyDescriptions);
+  const prompt = buildTaskPrompt({
+    taskName,
+    worldview,
+    difficulty,
+    timeOfDay,
+    historyDescriptions,
+  });
 
   const messages: QwenMessage[] = [
-    { role: 'system', content: '你是一个RPG任务生成器。' },
+    { role: 'system', content: QWEN_SYSTEM_PROMPT },
     { role: 'user', content: prompt },
   ];
 
@@ -100,16 +112,7 @@ export async function generateRpgDescription(
     const description = await callQwenAPI(apiKey, messages);
     return description;
   } catch (error) {
-    console.error('[Qwen] 生成失败，使用降级方案:', error);
-    return getFallbackDescription(worldview, taskName);
+    console.error('[Qwen] 生成失败，使用智能降级方案:', error);
+    return getSmartFallbackDescription(worldview, taskName, score);
   }
-}
-
-/**
- * 降级方案：使用本地模板生成描述
- */
-function getFallbackDescription(worldview: string, _taskName: string): string {
-  const templates = FALLBACK_DESCRIPTIONS[worldview] || FALLBACK_DESCRIPTIONS.modern;
-  const randomTemplate = templates[Math.floor(Math.random() * templates.length)];
-  return randomTemplate.replace('{X}', '30');
 }
